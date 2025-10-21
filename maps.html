@@ -14,19 +14,23 @@
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
         <style>
-        #map { height: 500px; }
+        #map {  
+            height: 500px; 
+        }
+        .popup-image {
+          max-width: 200px;
+            height: auto;
+        }
         </style>
 
-        
     </head>
     <body>
           <h1>Maps</h1>
          <div id="map"></div>
 
          </body>
-
-
          <script>
+
             function initMap(mapDataUrl){
                 const map = L.map('map').setView([8.360085068719618, 124.86851727406932], 17);
              L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -39,8 +43,15 @@
                 .then(data => {
                     data.foreach(pin=>{
                         const marker = L.marker([pin.lat, pin.lng]).addTo(map);
-                        marker.bindPopup(`${pin.name}<br>${pin.description}`);
-                  console.log('${pin.name} LOaded' + Date());
+
+                        const img =`<img src="${pin.img}" class="popup-image">`;
+                      //marker.bindPopup  (`${pin.name}<br>${pin.description}`);
+                  //console.log('${pin.name} LOaded `+ Date());
+                  marker.bindPopup(`
+                  ${img} <br>
+                  <b>${pin.title}<br>
+                    ${pin.description}
+                    `);
                     });
                 })
             
