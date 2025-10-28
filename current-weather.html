@@ -17,8 +17,35 @@
             const city = prompt("Enter a city name: ");
             console.log ("Prompt closed" + date());
 
-            if
-
-
+            if (!city) {
+            alert("No city entered "+ Date());
+            conssole.log ("No city entered"+ Date());
+            return;
         }
-    </script>
+        //API call
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&units=metric`;
+
+        try{
+            const response = await fetch(url);
+            if(!response.ok) throw new error ("city not found");
+
+            const data = await response.json();
+
+            const weatherResult = document.getElementById("weatherResult");
+            weatherResult.innerHTML= `
+            <h2>${data.name}${data.sys.country}<h2>
+                <p>Temperature: ${data.main.tempt} </p>
+                <p>Weather: ${data.weather[0].description}<p>
+                <P>Humidity: ${data.main.humidity} %</p>
+                <P>Wind speed: ${data.wind.speed} m/s</P>
+            `;
+
+        }catch (error){
+            //alert("Error: "+error.message);
+            console.log("Error:"+ error.message);
+        }
+
+
+    }
+</script>
+</html>
